@@ -7,11 +7,18 @@
  * 3. Run the below JavaScript in the browser (copy all, paste, and enter in the
  * browser developer console) to download all that juicy data. */
 
-// function to sleep for a certain amount of time
+/* download a string to a local file */
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], { type: contentType });
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 /* Inject jQuery into the page */
 var jQueryScript = document.createElement('script');
@@ -58,19 +65,19 @@ setTimeout(async () => {  // wait for scripts to load
         getElapsedTimeSinceLastMeasure()
         // make GET request
         link.click();
-        await sleep()
+        await sleep(4)
         // make GET request to get the officer's info
-        $.ajax({
+        await $.ajax({
             url: 'erreport.aspx',
             type: 'get',
             success: function (data) {
                 const officerName = $(data).find("#Label1")[0].innerText;
                 const elapsedTime = getElapsedTimeSinceLastMeasure();
-                console.log(`${officerName} (${elapsedTime} ms)`);
+                download(data, `IFS-HTML ${i + 1} ${officerName}.html`, 'text/html');
+                console.log(`${officerName} (${elapsedTime} ms) ${i}/${links.length}=${i / links.length}`);
             },
             async: false
         });
-        if (i > 5) break;
     }
 
 }, 100);

@@ -22,10 +22,7 @@ function getElapsedTimeSinceLastMeasure() {
 
 /*** Browser JavScript (Vanilla) ***/
 
-/* download a JSON object to a local file
-    @param content: JSON content
-    @param fileName: *.json or other text file
-    @param contentType: "application/json" or other file type */
+/* download a JSON object to a local file */
 function download(content, fileName, contentType) {
     var a = document.createElement("a");
     var file = new Blob([JSON.stringify(content)], { type: contentType });
