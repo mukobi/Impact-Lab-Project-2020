@@ -20,6 +20,15 @@ document.head.appendChild(jQueryScript);
 
 window.$ = $;
 
+var lastTime = new Date().getTime();
+
+function getElapsedTimeSinceLastMeasure() {
+    const newTime = new Date().getTime();
+    const diff = newTime - lastTime;
+    lastTime = newTime;
+    return diff;
+}
+
 setTimeout(async () => {  // wait for scripts to load
     // override form behaviour to submit without redirect
     __doPostBack = function (eventTarget, eventArgument) {
@@ -31,7 +40,9 @@ setTimeout(async () => {  // wait for scripts to load
                 url: 'reportersheet.aspx',
                 type: 'post',
                 data: $('#form1').serialize(),
-                success: function () { console.log('post success') }
+                success: function () {
+                    // console.log(`post success (${getElapsedTimeSinceLastMeasure()} ms)`);
+                }
             });
         }
     }
@@ -42,16 +53,18 @@ setTimeout(async () => {  // wait for scripts to load
     // for each officer
     for (i = 0; i < links.length; i++) {
         const link = links[i];
-        console.log(link.href);
 
         // make GET request
         link.click();
-        await sleep(1000);
+        await sleep(5000); // ~3000ms per POST request
         // make GET request to get the officer's info
+        getElapsedTimeSinceLastMeasure()
         $.get("erreport.aspx", function (data) {
-            console.log($(data).find("#Label1")[0].innerText);
+            const officerName = $(data).find("#Label1")[0].innerText;
+            // console.log(`GET success (${getElapsedTimeSinceLastMeasure()} ms)`);
+            console.log(officerName);
         });
-        await sleep(2000);
+        await sleep(1500);  // ~350 ms per GET request
         if (i > 5) break;
     }
 

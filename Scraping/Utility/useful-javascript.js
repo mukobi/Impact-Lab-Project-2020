@@ -9,6 +9,15 @@ function sleep(ms) {
 sleep(500).then(() => {/*do stuff */ }); // callback
 await sleep(2000); // async
 
+// time something globally
+var lastTime = new Date().getTime();
+function getElapsedTimeSinceLastMeasure() {
+    const newTime = new Date().getTime();
+    const diff = newTime - lastTime;
+    lastTime = newTime;
+    return diff;
+}
+
 /*****************************************************************************/
 
 /*** Browser JavScript (Vanilla) ***/
