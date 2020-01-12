@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+
+</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta http-equiv="Cache-Control" content="private" /><meta http-equiv="Cache-Control" content="no-cache" /><meta http-equiv="Cache-Control" content="no-store" /><meta http-equiv="Cache-Control" content="Must-revalidate" /><meta http-equiv="Cache-Control" content="Proxy-revalidate" /><meta http-equiv="Pragma" content="no-cache" /><meta http-equiv="Expires" content="0" />
+    <script type="text/javascript" language="javascript">
+        window.history.forward(-1);
+   </script>
+   		<script language="javascript" type ="text/javascript">
+		
+		var myclose = false;
+
+		function ConfirmClose()
+		{
+			if (event.clientY < 0)
+			{
+			
+				//event.returnValue = 'Any message you want';
+//alert('Select username');
+				setTimeout('myclose=true',100);
+				myclose=true;
+			}
+		}
+
+		function HandleOnClose()
+		{
+		//alert('Select username');
+			if (myclose==true) 
+			
+			window.showModalDialog("AutoBrowserClosed.aspx",window,"dialogHeight:0px;dialogWidth:0px;scroll:on;status:on");					
+			//window.showModalDialog("../AutoBrowserClosed.aspx",window,"dialogHeight:0px;dialogWidth:0px;scroll:on;status:on");
+		}
+
+             window.history.forward(1);
+ 
+					function abc()
+					{
+					 window.history.forward(1);
+					 
+					 
+					
+					}
+					function KeyDownHandler(btn)
+		  {
+		     if (event.keyCode == 13){
+		     event.returnValue = false;  
+		     event.cancel = true;  
+		     var obj = document.getElementById(btn);   
+		     obj.click();
+		     }
+	      }
+			
+    //disabling browser back button for mozila
+        function noBack()
+        {
+        window.history.forward(1)
+        }
+        noBack();
+        window.onload=noBack;
+        window.onpageshow=function(evt){if(evt.persisted)noBack()}
+        window.onunload=function(){void(0)}
+    </script>
+    <style type="text/css">
+        .style1
+        {
+            width: 100%;
+        }
+        .style2
+        {
+            width: 40%;
+        }
+        .style3
+        {
+            width: 80%;
+        }
+        .style4
+        {
+            height: 35px;
+        }
+    </style>
+</head>
+<body  bottomMargin="0" onload="noBack()"  leftMargin="0" topMargin="0" rightMargin="0" onbeforeunload="ConfirmClose()" onunload="HandleOnClose()">
+    <form method="post" action="erreport.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="A172B55B" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="+QXWQ5D5PdRJ+bTr3hT708eo9KuFx+sjzMrP9VFKnX0IV9ksCWyBtIzw+eH8WN+4BXzsChGj4V9ORbPjeiNmG3zzZnt2eoSEEMORl+YaRqR6KQySQL7TrprOEE371ed1" />
+</div>
+    <div>
+    
+        <table align="center" class="style1">
+            <tr>
+                <td align="center" bgcolor="#000099" width="100%">
+                    <font color="White" face="Verdana, Arial, Helvetica, sans-serif" size="4">
+                    <strong>Complete Executive Record Sheet Report </strong></font>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" width="100%">
+                    <a href="javascript:PrintIt();" onclick="window:print()" style="font-size:large; font-weight: bold; font-style: italic; fo; color: #0000FF;">Print</a>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" width="100%">
+                    <table align="center" border="1" class="style2">
+                        <tr>
+                            <td align="left" width="45%">
+                                Name :</td>
+                            <td align="left" width="55%">
+                                <span id="Label1" style="font-size:Small;font-weight:bold;">SUNIL AGARWAL</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="45%">
+                                Service:</td>
+                            <td align="left" width="55%">
+                                <span id="Label2" style="font-size:Small;font-weight:bold;">Indian Forest Service</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="45%">
+                                Cadre/Allotment Year :</td>
+                            <td align="left" width="55%">
+                                <span id="Label3" style="font-size:Small;font-weight:bold;">MP:1988</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="45%">
+                                Date of Birth :</td>
+                            <td align="left" width="55%">
+                                <span id="Label4" style="font-size:Small;font-weight:bold;">13/08/1963</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="45%">
+                                Gender :</td>
+                            <td align="left" width="55%">
+                                <span id="Label5" style="font-size:Small;font-weight:bold;">Male</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="left" width="45%">
+                                Place of Domicile :</td>
+                            <td align="left" width="55%">
+                                <span id="lblDomicile" style="font-size:Small;font-weight:bold;">MADHYA PRADESH</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="45%">
+                                Date of Appoinment :</td>
+                            <td align="left" width="55%">
+                                <span id="Label6" style="font-size:Small;font-weight:bold;">04/07/1988</span>
+                            </td>
+                        </tr>
+<!--                        <tr>
+                            <td align="left" width="45%">
+                                Category :</td>
+                            <td align="left" width="55%">
+                                <span id="Label7" style="font-size:Small;font-weight:bold;">GENERAL</span>
+                            </td>
+                        </tr>       -->
+                        <tr>
+                            <td align="left" width="45%">
+                                <font face="Arial" size="2">Recruitment Source :</font></td>
+                            <td align="left" width="55%">
+                                <span id="Label8" style="font-size:Small;font-weight:bold;">RR</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="45%">
+                                <font face="Arial" size="2">IFS Cadre :</font></td>
+                            <td align="left" width="55%">
+                                <span id="Label9" style="font-size:Small;font-weight:bold;">MADHYA PRADESH</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td align="center" width="100%">
+                    <table align="center" border="1" class="style3">
+                        <tr>
+                            <td align="left" width="20%">
+                                Officer Address :</td>
+                            <td align="left" width="30%">
+                                <span id="Label10" style="font-size:Small;font-weight:bold;">APCCF LAND MANAGEMENT</span>
+                            </td>
+                            <td align="left" width="30%">
+                                Marital Status :</td>
+                            <td align="left" width="20%">
+                                <span id="Label14" style="font-size:Small;font-weight:bold;">Married</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="20%">
+                                Telephone Office :</td>
+                            <td align="left" width="30%">
+                                <span id="Label11" style="font-size:Small;font-weight:bold;">07552674234</span>
+                            </td>
+                            <td align="left" width="30%">
+                                Telephone Residential:</td>
+                            <td align="left" width="20%">
+                                <span id="Label15" style="font-size:Small;font-weight:bold;">07554916272</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="20%">
+                                Fax Number:</td>
+                            <td align="left" width="30%">
+                                <span id="Label12" style="font-size:Small;font-weight:bold;">07552674234</span>
+                            </td>
+                            <td align="left" width="30%">
+                                Mobile :</td>
+                            <td align="left" width="20%">
+                                <span id="Label16" style="font-size:Small;font-weight:bold;">09424790090</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="20%">
+                                Email Address:
+                            </td>
+                            <td align="left" width="30%">
+                                <span id="Label13" style="font-size:Small;font-weight:bold;">sunil1308agarwal@gmail.com</span>
+                            </td>
+                            <td align="left" width="30%">
+                                If Tenure Post,Date of Expiry of the Tenure :</td>
+                            <td align="left" width="20%">
+                                <span id="Label17" style="font-size:Small;font-weight:bold;">No , </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td align="left" style="font-weight: bold" width="100%">
+                    Educational Qualifications.</td>
+            </tr>
+            <tr>
+                <td align="center" width="100%">
+                    <div>
+	<table cellspacing="2" id="GridView1" style="width:100%;">
+		<tr align="left" style="color:#006600;background-color:#FAC25A;">
+			<th scope="col">Qualification I</th><th scope="col">Qualification II</th><th scope="col">Qualification III</th>
+		</tr><tr style="font-size:Small;">
+			<td>BE Civil</td><td>&nbsp;</td><td>&nbsp;</td>
+		</tr>
+	</table>
+</div>
+                   </td>
+            </tr>
+            <tr> 
+                <td align="left">
+                    
+                </td>
+            </tr>    
+            <tr>
+                <td align="center" width="100%">
+                    <hr width="100%" />
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-weight: bold" width="100%">
+                    Posting Details.</td>
+            </tr>
+            <tr>
+                <td align="center" width="100%">
+                    <div>
+	<table cellspacing="2" id="GridView2" style="width:100%;">
+		<tr align="left" style="color:#006600;background-color:#FAC25A;">
+			<th scope="col">S. No</th><th scope="col">Date of Posting From</th><th scope="col">Date of Posting To</th><th scope="col">PostHold</th><th scope="col">Department</th><th scope="col">Post Under</th><th scope="col">Pay Scale &amp; Grade Pay</th><th scope="col">Date of Scale</th>
+		</tr><tr style="font-size:Small;">
+			<td>1</td><td>01/11/2016</td><td>&nbsp;</td><td>APCCF LM</td><td>M P FOREST</td><td>CADRE</td><td>67000-79000 &amp; 0</td><td>01/11/2016</td>
+		</tr><tr style="font-size:Small;">
+			<td>2</td><td>02/08/2014</td><td>24/10/2016</td><td>CCF Shahdol</td><td>MP Forest Deptt.</td><td>CADRE</td><td>37400-67000 &amp; 10000</td><td>13/03/2012</td>
+		</tr><tr style="font-size:Small;">
+			<td>3</td><td>13/03/2012</td><td>25/07/2014</td><td>CCF Administration</td><td>MP Forest Deptt.</td><td>CADRE</td><td>37400-67000 &amp; 10000</td><td>13/03/2012</td>
+		</tr><tr style="font-size:Small;">
+			<td>4</td><td>16/08/2010</td><td>09/03/2012</td><td>CF WP Balaghat</td><td>MP Forest Deptt.</td><td>CADRE</td><td>37400-67000 &amp; 8900</td><td>01/01/2008</td>
+		</tr><tr style="font-size:Small;">
+			<td>5</td><td>01/07/2010</td><td>12/08/2010</td><td>CF WP Rewa</td><td>MP Forest Deptt.</td><td>CADRE</td><td>37400-67000 &amp; 8900</td><td>01/01/2008</td>
+		</tr><tr style="font-size:Small;">
+			<td>6</td><td>06/04/2010</td><td>22/06/2010</td><td>CF WP Jabalpur</td><td>MP Forest Deptt</td><td>CADRE</td><td>37400-67000 &amp; 8900</td><td>01/01/2008</td>
+		</tr><tr style="font-size:Small;">
+			<td>7</td><td>01/12/2009</td><td>01/04/2010</td><td>CF in PCCF office</td><td>MP Forest Deptt.</td><td>CADRE</td><td>37400-67000 &amp; 8900</td><td>01/01/2008</td>
+		</tr><tr style="font-size:Small;">
+			<td>8</td><td>20/09/2004</td><td>30/11/2009</td><td>DCF &amp; CF</td><td>TFRI Jabalpur</td><td>CDR(CSS-MOEF)</td><td>16400-20000</td><td>28/03/2005</td>
+		</tr><tr style="font-size:Small;">
+			<td>9</td><td>01/01/2004</td><td>10/09/2004</td><td>DFO South Seoni</td><td>MP Forest Deptt</td><td>CADRE</td><td>14300-18300</td><td>01/01/2004</td>
+		</tr><tr style="font-size:Small;">
+			<td>10</td><td>19/09/2002</td><td>31/12/2003</td><td>DFO West Chhindwara</td><td>MP Forest Deptt.</td><td>CADRE</td><td>12000-16500</td><td>01/01/2002</td>
+		</tr><tr style="font-size:Small;">
+			<td>11</td><td>26/02/2001</td><td>16/09/2002</td><td>Dy Director SFRI</td><td>SFRI Jabalpur</td><td>SDR</td><td>12000-16500</td><td>01/01/2002</td>
+		</tr><tr style="font-size:Small;">
+			<td>12</td><td>05/08/1999</td><td>15/02/2001</td><td>DFO South Seoni</td><td>MP Forest Deptt.</td><td>CADRE</td><td>10000-15200 </td><td>01/07/1996</td>
+		</tr><tr style="font-size:Small;">
+			<td>13</td><td>24/07/1998</td><td>29/07/1999</td><td>DFO Jhabua</td><td>MP Forest Deptt.</td><td>CADRE</td><td>12000-16500</td><td>01/07/1996</td>
+		</tr><tr style="font-size:Small;">
+			<td>14</td><td>06/07/1995</td><td>21/07/1998</td><td>DFO Dhar</td><td>MP Forest Deptt.</td><td>CADRE</td><td>3000-4500</td><td>01/07/1992</td>
+		</tr><tr style="font-size:Small;">
+			<td>15</td><td>01/07/1992</td><td>05/07/1995</td><td>DFO Social Forestry Indore</td><td>MP Forest Deptt.</td><td>CADRE</td><td>3000-4500</td><td>01/07/1992</td>
+		</tr><tr style="font-size:Small;">
+			<td>16</td><td>10/02/1992</td><td>30/06/1992</td><td>Attach Officer</td><td>Circle office Indore</td><td>OTHERS</td><td>2200-4000</td><td>04/07/1988</td>
+		</tr><tr style="font-size:Small;">
+			<td>17</td><td>01/04/1991</td><td>05/02/1992</td><td>SDO Multai</td><td>South Betul Territorial Division</td><td>CADRE</td><td>2200-4000</td><td>04/07/1988</td>
+		</tr><tr style="font-size:Small;">
+			<td>18</td><td>03/08/1990</td><td>31/03/1991</td><td>IFS Probationer</td><td>North Betul Territorial Division</td><td>CADRE</td><td>2200-4000</td><td>04/07/1988</td>
+		</tr><tr style="font-size:Small;">
+			<td>19</td><td>01/04/1990</td><td>25/07/1990</td><td>IFS Probationer</td><td>LBSAA Mussorrie</td><td>OTHERS</td><td>2200-4000</td><td>04/07/1988</td>
+		</tr><tr style="font-size:Small;">
+			<td>20</td><td>04/07/1988</td><td>31/03/1990</td><td>IFS Probationer</td><td>IGNFA Dehradun</td><td>OTHERS</td><td>2200-4000</td><td>04/07/1988</td>
+		</tr>
+	</table>
+</div>
+                </td>
+            </tr>
+            <tr> 
+                <td align="left">
+                    
+                </td>
+            </tr>   
+            <tr>
+                <td align="center" width="100%">
+                    <hr width="100%" />
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-weight: bold" width="100%">
+                    Training Details</td>
+            </tr>
+            <tr>
+                <td align="center" width="100%">
+                    <div>
+	<table cellspacing="2" id="GridView3" style="width:100%;">
+		<tr align="left" style="color:#006600;background-color:#FAC25A;">
+			<th scope="col">S.No.</th><th scope="col">Type</th><th scope="col">Financial Year</th><th scope="col">Duration</th><th scope="col">Training From</th><th scope="col">Training To</th><th scope="col">Institute code</th><th scope="col">Subject Code </th><th scope="col">Country Name</th>
+		</tr><tr style="font-size:Small;">
+			<td>1</td><td>Domestic</td><td>2015-2016</td><td>1W</td><td>14/09/2015</td><td>18/09/2015</td><td>Jungle Lodges and Resorts Limited, Bangalore</td><td>Eco-tourism- Wildlife and Habitat Management</td><td>India</td>
+		</tr><tr style="font-size:Small;">
+			<td>2</td><td>Domestic</td><td>2014-2015</td><td>1D</td><td>15/12/2014</td><td>19/12/2014</td><td>AVID FOREST RESEARCH INSTITUTE JODHPUR</td><td>Integrated Approach for Sustainable  Development of Fragile Desert Eco-system</td><td>India</td>
+		</tr><tr style="font-size:Small;">
+			<td>3</td><td>Foreign</td><td>2014-2015</td><td>4W</td><td>19/05/2014</td><td>13/06/2014</td><td>Indian Institute of Management,Bangalore</td><td>Mid-Career Training (MCT) for IFS Officers</td><td>India</td>
+		</tr><tr style="font-size:Small;">
+			<td>4</td><td>Domestic</td><td>2012-2013</td><td>1W</td><td>19/11/2012</td><td>23/11/2012</td><td>Kerala Forest Research Institute, Peechi, Thrissur</td><td>Conservation and Development of Medicinal Plants and benefit sharing with local communities</td><td>India</td>
+		</tr><tr style="font-size:Small;">
+			<td>5</td><td>Domestic</td><td>2006-2007</td><td>1W</td><td>08/05/2006</td><td>12/05/2006</td><td>ASCI, Hyderabad</td><td>Natural Resource Management and Conflict Resolution with Special Reference to Forestry</td><td>India</td>
+		</tr><tr style="font-size:Small;">
+			<td>6</td><td>Domestic</td><td>2004-2005</td><td>1W</td><td>10/01/2005</td><td>14/01/2005</td><td>Vidya Vikas Mandals, Institute of Management Training &amp; Research, Goa</td><td>Leadership- Strategies for Success</td><td>India</td>
+		</tr><tr style="font-size:Small;">
+			<td>7</td><td>Domestic</td><td>2003-2004</td><td>1W</td><td>02/06/2003</td><td>06/06/2003</td><td>H.P.Institute of Public Administration, Shimla</td><td>Stress Management</td><td>India</td>
+		</tr>
+	</table>
+</div>
+                </td>
+            </tr>
+            <tr> 
+                <td align="left">
+                    
+                </td>
+            </tr>   
+            <tr>
+                <td align="center" width="100%">
+                    <hr width="100%" />
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-weight: bold" width="100%">
+                    Specialization Details (Domestic)</td>
+            </tr>
+            <tr>
+                <td align="center" width="100%">
+                    <div>
+
+</div>
+                </td>
+            </tr>
+            <tr> 
+                <td align="left">
+                    <span id="Label21" style="color:Red;font-weight:bold;">Specialization Details are not Available</span>
+                </td>
+            </tr>   
+            <tr>
+                <td align="center" width="100%">
+                    <hr width="100%" />
+                </td>
+            </tr>
+            <tr>
+                <td align="center" class="style4" width="100%">
+                    <input type="submit" name="Button1" value="Back" id="Button1" style="color:White;background-color:#009933;border-width:0px;font-weight:bold;height:27px;width:95px;" />
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+    </form>
+</body>
+</html>
