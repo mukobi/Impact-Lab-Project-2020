@@ -1,4 +1,18 @@
 
+/*** General JavaScript ***/
+
+// sleep for a certain amount of time
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+// usage
+sleep(500).then(() => {/*do stuff */ }); // callback
+await sleep(2000); // async
+
+/*****************************************************************************/
+
+/*** Browser JavScript (Vanilla) ***/
+
 /* download a JSON object to a local file
     @param content: JSON content
     @param fileName: *.json or other text file
@@ -12,6 +26,9 @@ function download(content, fileName, contentType) {
 }
 download(jsonData, 'data.json', 'application/json'); // usage
 
+/*****************************************************************************/
+
+/*** Browser JavScript (jQuery) ***/
 
 /* Inject jQuery into the document */
 var jQueryScript = document.createElement('script');

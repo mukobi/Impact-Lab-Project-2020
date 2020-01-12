@@ -7,6 +7,11 @@
  * 3. Run the below JavaScript in the browser (copy all, paste, and enter in the
  * browser developer console) to download all that juicy data. */
 
+// function to sleep for a certain amount of time
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 
 /* Inject jQuery into the page */
 var jQueryScript = document.createElement('script');
@@ -15,32 +20,39 @@ document.head.appendChild(jQueryScript);
 
 window.$ = $;
 
-setTimeout(() => {  // wait for scripts to load
+setTimeout(async () => {  // wait for scripts to load
+    // override form behaviour to submit without redirect
+    __doPostBack = function (eventTarget, eventArgument) {
+        if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+            theForm.__EVENTTARGET.value = eventTarget;
+            theForm.__EVENTARGUMENT.value = eventArgument;
+            // theForm.submit();
+            $.ajax({
+                url: 'reportersheet.aspx',
+                type: 'post',
+                data: $('#form1').serialize(),
+                success: function () { console.log('post success') }
+            });
+        }
+    }
 
     // get list of all officers
     const links = $('tbody:last').find('a');
 
     // for each officer
-    for (i = 2; i < links.length; i++) {
+    for (i = 0; i < links.length; i++) {
         const link = links[i];
-        // extract __EVENTTARGET parameter from link
-        let __EVENTTARGET = link.href.match(/__doPostBack\('(.*)',''/)[1];
+        console.log(link.href);
 
-        // convert __EVENTTARGET paramerer to an HTML-formatted string
-        __EVENTTARGET = encodeURIComponent(__EVENTTARGET);
-        console.log(__EVENTTARGET);
-
-        // make POST request to set the active officer
-        $.post("reportersheet.aspx", { __EVENTTARGET: __EVENTTARGET, __EVENTARGUMENT: '' }, () => {
-            setTimeout(() => {
-                // make GET request to get the officer's info
-                $.get("erreport.aspx", function (data) {
-                    console.log($(data).find("#Label1")[0].innerText);
-                });
-            }, 1000);
-
+        // make GET request
+        link.click();
+        await sleep(1000);
+        // make GET request to get the officer's info
+        $.get("erreport.aspx", function (data) {
+            console.log($(data).find("#Label1")[0].innerText);
         });
-        if (i > 4) break;
+        await sleep(2000);
+        if (i > 5) break;
     }
 
 }, 100);
