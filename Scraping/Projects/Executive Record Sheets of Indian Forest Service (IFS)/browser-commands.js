@@ -30,19 +30,20 @@ function getElapsedTimeSinceLastMeasure() {
 }
 
 setTimeout(async () => {  // wait for scripts to load
+    jQuery.ajaxSetup({ async: false });
+
     // override form behaviour to submit without redirect
-    __doPostBack = function (eventTarget, eventArgument) {
+    __doPostBack = async function (eventTarget, eventArgument) {
         if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
             theForm.__EVENTTARGET.value = eventTarget;
             theForm.__EVENTARGUMENT.value = eventArgument;
             // theForm.submit();
-            $.ajax({
+            await $.ajax({
                 url: 'reportersheet.aspx',
                 type: 'post',
                 data: $('#form1').serialize(),
-                success: function () {
-                    // console.log(`post success (${getElapsedTimeSinceLastMeasure()} ms)`);
-                }
+                success: function () { },
+                async: false
             });
         }
     }
@@ -54,17 +55,21 @@ setTimeout(async () => {  // wait for scripts to load
     for (i = 0; i < links.length; i++) {
         const link = links[i];
 
+        getElapsedTimeSinceLastMeasure()
         // make GET request
         link.click();
-        await sleep(5000); // ~3000ms per POST request
+        await sleep()
         // make GET request to get the officer's info
-        getElapsedTimeSinceLastMeasure()
-        $.get("erreport.aspx", function (data) {
-            const officerName = $(data).find("#Label1")[0].innerText;
-            // console.log(`GET success (${getElapsedTimeSinceLastMeasure()} ms)`);
-            console.log(officerName);
+        $.ajax({
+            url: 'erreport.aspx',
+            type: 'get',
+            success: function (data) {
+                const officerName = $(data).find("#Label1")[0].innerText;
+                const elapsedTime = getElapsedTimeSinceLastMeasure();
+                console.log(`${officerName} (${elapsedTime} ms)`);
+            },
+            async: false
         });
-        await sleep(1500);  // ~350 ms per GET request
         if (i > 5) break;
     }
 
