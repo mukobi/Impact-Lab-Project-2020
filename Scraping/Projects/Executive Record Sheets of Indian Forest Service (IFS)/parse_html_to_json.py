@@ -25,7 +25,7 @@ def main():
             soup = BeautifulSoup(html_file.read(), 'html.parser')
 
             # Basic info
-            individual_officer_data['Basic Info'] = {
+            individual_officer_data['Basic Info'] = {  # TODO: replace .string with .text
                 'Name': soup.find(id='Label1').string,
                 'Service': soup.find(id='Label2').string,
                 'Cadre/Allotment Year': soup.find(id='Label3').string,
@@ -42,17 +42,25 @@ def main():
                 'Qualification I': qualifications[0].string.replace(u'\xa0', u'none'),
                 'Qualification II': qualifications[1].string.replace(u'\xa0', u'none'),
                 'Qualification III': qualifications[2].string.replace(u'\xa0', u'none')}
-            print(individual_officer_data['Educational Qualifications'])
 
             # Posting Details
             individual_officer_data['Posting Details'] = {}
             postings = soup.find(id='GridView2')
             if postings:  # check for Not Available
-                postings = postings.find_all('tr')[1:]  # first row is labels
+                postings = postings.find_all('tr')
+                # first row is labels
+                labels = [item.text for item in postings[0].find_all('th')]
+                postings = postings[1:]
+                for posting in postings:
+                    line_data = [item.text for item in posting.find_all('td')]
+                    posting_data_dict = dict(zip(labels, line_data))
+                    serial_number = posting_data_dict['S. No']
+                    individual_officer_data['Posting Details'][serial_number] = posting_data_dict
+            print(individual_officer_data['Posting Details'])
 
         all_officer_data[html_filename] = individual_officer_data
 
-        if i > 5:
+        if i > 0:
             break
 
 
