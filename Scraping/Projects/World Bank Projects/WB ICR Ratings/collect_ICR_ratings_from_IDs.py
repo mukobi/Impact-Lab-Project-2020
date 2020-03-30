@@ -18,19 +18,30 @@ MAX_TRIES_PER_URL = 8
 
 # define which fields we care about saving
 FIELDS_TO_SAVE = [
-    'outcome',  # Outcome Rating
-    'evaluation_riskdo',  # Risk To Development Outcome
-    'bankqualityatentry',  # NOTE: Hidden on WB project webpage
-    'bankqualityofsupervision',  # NOTE: Hidden on WB project webpage
-    'overallbankperf',  # Bank Performance
-    'overallborrowperf',  # Borrower Performance
-    # NOTE: field doesn't appear to match, but is what's used on the WB project webpage
-    'borrowcompliance',  # Government Performance
-    # NOTE: field doesn't appear to match, but is what's used on the WB project webpage
-    'borrowimplementation',  # Implementing Agency
-    'icrquality',  # Icr Quality
-    'mequality',  # M&E Quality
+    'outratingind',  # Outcomes
+    'completion_riskdo',  # Risk to Development Outcome
+    'overallrating',  # Bank Performance
+    'bankqualityentry',  # NOTE: Hidden on WB project webpage
+    'banksupervision',  # NOTE: Hidden on WB project webpage
+    'borroverall',  # Borrower Performance
+    'borrgovt',  # Government Performance
+    'borrimplegency',  # Implementing Agency
 ]
+
+# FIELDS_TO_SAVE = [ # IEG Ratings
+#     'outcome',  # Outcome Rating
+#     'evaluation_riskdo',  # Risk To Development Outcome
+#     'bankqualityatentry',  # NOTE: Hidden on WB project webpage
+#     'bankqualityofsupervision',  # NOTE: Hidden on WB project webpage
+#     'overallbankperf',  # Bank Performance
+#     'overallborrowperf',  # Borrower Performance
+#     # NOTE: field doesn't appear to match, but is what's used on the WB project webpage
+#     'borrowcompliance',  # Government Performance
+#     # NOTE: field doesn't appear to match, but is what's used on the WB project webpage
+#     'borrowimplementation',  # Implementing Agency
+#     'icrquality',  # Icr Quality
+#     'mequality',  # M&E Quality
+# ]
 
 
 # configure file IO
@@ -63,12 +74,15 @@ def main():
                 project_ratings = {}
                 for field in FIELDS_TO_SAVE:
                     try:
-                        project_ratings[field] = project_data[field][0]
+                        field_data = project_data[field]
+                        if isinstance(field_data, list):
+                            field_data = field_data[0]
+                        project_ratings[field] = field_data
                     except KeyError:
                         project_ratings[field] = "missing"
                 return project_id, project_ratings
 
-            except (requests.ConnectionError, requests.exceptions.ChunkedEncodingError) as error:
+            except (requests.ConnectionError, requests.exceptions.ChunkedEncodingError):
                 continue
         print(f'Max tries of {MAX_TRIES_PER_URL} exceeded for url {url}')
 
