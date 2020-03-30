@@ -4,13 +4,12 @@ Warning: This will download ~3 GB of data, be prepared!
 """
 
 import os
-import json
 import requests
 import progressbar  # install with `pip install progressbar2`
 
 URLS_FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 URLS_FILE_PATH = os.path.join(
-    URLS_FILE_PATH, 'Data\Projects URLs\WB Projects Urls.txt')
+    URLS_FILE_PATH, r'Data\Projects URLs\WB Projects Urls.txt')
 
 DATA_FOLDER_PATH = os.path.dirname(os.path.abspath(__file__))
 DATA_FOLDER_PATH = os.path.join(DATA_FOLDER_PATH, 'Data')
