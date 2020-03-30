@@ -4,12 +4,17 @@ Warning: This will download ~3 GB of data, be prepared!
 """
 
 import os
-import requests
+from multiprocessing.dummy import Pool
 import json
-import progressbar  # install with `pip install progressbar2`
+import requests
+from tqdm import tqdm  # install with `pip install tqdm`
 
 # periodically write to file every n requests
 REQUESTS_PER_FILE_WRITE_INTERVAL = 100
+# multithreading
+NUM_THREADPOOL_WORKERS = 128
+# how many time to try to reconnect on a broken request
+MAX_TRIES_PER_URL = 8
 
 # define which fields we care about saving
 FIELDS_TO_SAVE = [
@@ -43,6 +48,29 @@ OUTPUT_FILE_PATH = os.path.join(OUTPUT_FILE_PATH, 'ICR_Ratings.json')
 
 def main():
     """Main execution."""
+    def download_ratings_for_project_id(project_id):
+        if project_id in all_ratings.keys():
+            return None  # already downloaded this project's ratings
+
+        for _ in range(MAX_TRIES_PER_URL):
+            try:
+                url = f'https://search.worldbank.org/api/v2/projects?format=json&fl=*&id={project_id}&apilang=en'
+                data = requests.get(url)
+                data = json.loads(data.content)
+
+                project_data = data['projects'][project_id]
+
+                project_ratings = {}
+                for field in FIELDS_TO_SAVE:
+                    try:
+                        project_ratings[field] = project_data[field][0]
+                    except KeyError:
+                        project_ratings[field] = "missing"
+                return project_id, project_ratings
+
+            except (requests.ConnectionError, requests.exceptions.ChunkedEncodingError) as error:
+                continue
+        print(f'Max tries of {MAX_TRIES_PER_URL} exceeded for url {url}')
 
     # open downloaded IDs
     ids = []
@@ -56,32 +84,18 @@ def main():
         with (open(OUTPUT_FILE_PATH)) as file:
             all_ratings = json.loads(file.read())
 
-    # download ratings
+    # download ratings (using multithreading)
+    pool = Pool(NUM_THREADPOOL_WORKERS)
+    for i, result in enumerate(tqdm(pool.imap_unordered(download_ratings_for_project_id, ids), total=len(ids))):
+        if result is not None:
+            (project_id, project_ratings) = result
+            all_ratings[project_id] = project_ratings
+            if (i + 1) % REQUESTS_PER_FILE_WRITE_INTERVAL == 0:
+                write_json_to_file(all_ratings, OUTPUT_FILE_PATH)
 
-    for i, project_id in enumerate(progressbar.progressbar(ids)):
-        if project_id in all_ratings.keys():
-            continue  # already downloaded this project's ratings
+    write_json_to_file(all_ratings, OUTPUT_FILE_PATH)
 
-        url = f'https://search.worldbank.org/api/v2/projects?format=json&fl=*&id={project_id}&apilang=en'
-
-        data = requests.get(url)
-        data = json.loads(data.content)
-
-        project_data = data['projects'][project_id]
-
-        project_ratings = {}
-        for field in FIELDS_TO_SAVE:
-            try:
-                project_ratings[field] = project_data[field][0]
-            except KeyError:
-                project_ratings[field] = "missing"
-
-        all_ratings[project_id] = project_ratings
-
-        if (i + 1) % REQUESTS_PER_FILE_WRITE_INTERVAL == 0:
-            write_json_to_file(all_ratings, OUTPUT_FILE_PATH)
-
-    print(f'Succesfully downloaded {len(ids)} files.')
+    print(f'Succesfully downloaded {len(all_ratings)} files.')
 
 
 def write_json_to_file(data, filepath):
