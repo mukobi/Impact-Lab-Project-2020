@@ -9,7 +9,7 @@ import requests
 from tqdm import tqdm  # install with `pip install tqdm`
 
 # Should be .json
-OUTPUT_FILENAME = 'ICR_Ratings.json'
+OUTPUT_FILENAME = 'WB_Project_Ratings.json'
 assert OUTPUT_FILENAME[-5:] == '.json'
 
 # periodically write to file every n requests

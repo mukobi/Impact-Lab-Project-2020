@@ -5,17 +5,17 @@ import os
 import csv
 import json
 
-INPUT_FILENAME = 'ICR_Ratings.json'
+INPUT_FILENAME = 'WB_Project_Ratings.json'
 assert INPUT_FILENAME[-5:] == '.json'
-OUTPUT_FILENAME = 'ICR_Ratings.csv'
+OUTPUT_FILENAME = 'WB_Project_Ratings.csv'
 assert OUTPUT_FILENAME[-4:] == '.csv'
 
-ICR_RATINGS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-ICR_RATINGS_FOLDER = os.path.join(
-    ICR_RATINGS_FOLDER, r'Data/Projects ICR Ratings')  # assumes this folder exists
+PROJECTS_RATINGS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+PROJECTS_RATINGS_FOLDER = os.path.join(
+    PROJECTS_RATINGS_FOLDER, r'Data/Projects Ratings')  # assumes this folder exists
 
-INPUT_FILEPATH = os.path.join(ICR_RATINGS_FOLDER, INPUT_FILENAME)
-OUTPUT_FILEPATH = os.path.join(ICR_RATINGS_FOLDER, OUTPUT_FILENAME)
+INPUT_FILEPATH = os.path.join(PROJECTS_RATINGS_FOLDER, INPUT_FILENAME)
+OUTPUT_FILEPATH = os.path.join(PROJECTS_RATINGS_FOLDER, OUTPUT_FILENAME)
 
 
 def main():
