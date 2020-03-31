@@ -14,10 +14,10 @@ REQUESTS_PER_FILE_WRITE_INTERVAL = 100
 # multithreading
 NUM_THREADPOOL_WORKERS = 128
 # how many time to try to reconnect on a broken request
-MAX_TRIES_PER_URL = 8
+MAX_TRIES_PER_URL = 12
 
 # define which fields we care about saving
-FIELDS_TO_SAVE = [
+ICR_FIELDS_TO_SAVE = [
     'outratingind',  # Outcomes
     'completion_riskdo',  # Risk to Development Outcome
     'overallrating',  # Bank Performance
@@ -28,20 +28,20 @@ FIELDS_TO_SAVE = [
     'borrimplegency',  # Implementing Agency
 ]
 
-# FIELDS_TO_SAVE = [ # IEG Ratings
-#     'outcome',  # Outcome Rating
-#     'evaluation_riskdo',  # Risk To Development Outcome
-#     'bankqualityatentry',  # NOTE: Hidden on WB project webpage
-#     'bankqualityofsupervision',  # NOTE: Hidden on WB project webpage
-#     'overallbankperf',  # Bank Performance
-#     'overallborrowperf',  # Borrower Performance
-#     # NOTE: field doesn't appear to match, but is what's used on the WB project webpage
-#     'borrowcompliance',  # Government Performance
-#     # NOTE: field doesn't appear to match, but is what's used on the WB project webpage
-#     'borrowimplementation',  # Implementing Agency
-#     'icrquality',  # Icr Quality
-#     'mequality',  # M&E Quality
-# ]
+IEG_FIELDS = [  # IEG Ratings
+    'outcome',  # Outcome Rating
+    'evaluation_riskdo',  # Risk To Development Outcome
+    'bankqualityatentry',  # NOTE: Hidden on WB project webpage
+    'bankqualityofsupervision',  # NOTE: Hidden on WB project webpage
+    'overallbankperf',  # Bank Performance
+    'overallborrowperf',  # Borrower Performance
+    # NOTE: field doesn't appear to match, but is what's used on the WB project webpage
+    'borrowcompliance',  # Government Performance
+    # NOTE: field doesn't appear to match, but is what's used on the WB project webpage
+    'borrowimplementation',  # Implementing Agency
+    'icrquality',  # Icr Quality
+    'mequality',  # M&E Quality
+]
 
 
 # configure file IO
@@ -62,25 +62,16 @@ def main():
     def download_ratings_for_project_id(project_id):
         if project_id in all_ratings.keys():
             return None  # already downloaded this project's ratings
-
         for _ in range(MAX_TRIES_PER_URL):
             try:
                 url = f'https://search.worldbank.org/api/v2/projects?format=json&fl=*&id={project_id}&apilang=en'
                 data = requests.get(url)
                 data = json.loads(data.content)
-
                 project_data = data['projects'][project_id]
-
-                project_ratings = {}
-                for field in FIELDS_TO_SAVE:
-                    try:
-                        field_data = project_data[field]
-                        if isinstance(field_data, list):
-                            field_data = field_data[0]
-                        project_ratings[field] = field_data
-                    except KeyError:
-                        project_ratings[field] = "missing"
-                return project_id, project_ratings
+                ratings = {
+                    'ICR': capture_fields_from_data(project_data, ICR_FIELDS_TO_SAVE),
+                    'IEG': capture_fields_from_data(project_data, IEG_FIELDS)}
+                return project_id, ratings
 
             except (requests.ConnectionError, requests.exceptions.ChunkedEncodingError):
                 continue
@@ -102,14 +93,29 @@ def main():
     pool = Pool(NUM_THREADPOOL_WORKERS)
     for i, result in enumerate(tqdm(pool.imap_unordered(download_ratings_for_project_id, ids), total=len(ids))):
         if result is not None:
-            (project_id, project_ratings) = result
-            all_ratings[project_id] = project_ratings
+            (project_id, icr_ratings) = result
+            all_ratings[project_id] = icr_ratings
             if (i + 1) % REQUESTS_PER_FILE_WRITE_INTERVAL == 0:
                 write_json_to_file(all_ratings, OUTPUT_FILE_PATH)
 
     write_json_to_file(all_ratings, OUTPUT_FILE_PATH)
 
     print(f'Succesfully downloaded {len(all_ratings)} files.')
+
+
+def capture_fields_from_data(project_data, fields):
+    """Extracts data for the given key list `fields` from a dict `project_data`."""
+    output = {}
+    for field in fields:
+        try:
+            field_data = project_data[field]
+            if isinstance(field_data, list):  # handle `key: [value]`
+                # assumes only the first list element is important
+                field_data = field_data[0]
+            output[field] = field_data
+        except KeyError:
+            output[field] = ""
+    return output
 
 
 def write_json_to_file(data, filepath):
