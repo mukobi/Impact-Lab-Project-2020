@@ -1,5 +1,5 @@
 """Using the project URLs downloaded from ./download_project_urls.py, downloads
-the html webpage for each project and saves them to a single JSON file.
+the ICR and IEG ratings for each project and saves them to a single JSON file.
 """
 
 import os
