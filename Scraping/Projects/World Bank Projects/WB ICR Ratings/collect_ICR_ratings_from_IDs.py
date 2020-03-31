@@ -1,6 +1,5 @@
 """Using the project URLs downloaded from ./download_project_urls.py, downloads
-the html webpage for each project and saves them all to a folder.
-Warning: This will download ~3 GB of data, be prepared!
+the html webpage for each project and saves them to a single JSON file.
 """
 
 import os
@@ -9,6 +8,10 @@ import json
 import requests
 from tqdm import tqdm  # install with `pip install tqdm`
 
+# Should be .json
+OUTPUT_FILENAME = 'ICR_Ratings.json'
+assert OUTPUT_FILENAME[-5:] == '.json'
+
 # periodically write to file every n requests
 REQUESTS_PER_FILE_WRITE_INTERVAL = 100
 # multithreading
@@ -16,8 +19,9 @@ NUM_THREADPOOL_WORKERS = 128
 # how many time to try to reconnect on a broken request
 MAX_TRIES_PER_URL = 12
 
+
 # define which fields we care about saving
-ICR_FIELDS_TO_SAVE = [
+ICR_FIELDS = [
     'outratingind',  # Outcomes
     'completion_riskdo',  # Risk to Development Outcome
     'overallrating',  # Bank Performance
@@ -54,7 +58,7 @@ OUTPUT_FILE_PATH = os.path.join(OUTPUT_FILE_PATH, 'Data')
 OUTPUT_FILE_PATH = os.path.join(OUTPUT_FILE_PATH, 'Projects ICR Ratings')
 if not os.path.exists(OUTPUT_FILE_PATH):
     os.makedirs(OUTPUT_FILE_PATH)
-OUTPUT_FILE_PATH = os.path.join(OUTPUT_FILE_PATH, 'ICR_Ratings.json')
+OUTPUT_FILE_PATH = os.path.join(OUTPUT_FILE_PATH, OUTPUT_FILENAME)
 
 
 def main():
@@ -69,7 +73,7 @@ def main():
                 data = json.loads(data.content)
                 project_data = data['projects'][project_id]
                 ratings = {
-                    'ICR': capture_fields_from_data(project_data, ICR_FIELDS_TO_SAVE),
+                    'ICR': capture_fields_from_data(project_data, ICR_FIELDS),
                     'IEG': capture_fields_from_data(project_data, IEG_FIELDS)}
                 return project_id, ratings
 
@@ -83,7 +87,7 @@ def main():
         ids = urls_file.readlines()
     ids = [url.strip('\n') for url in ids]
 
-    # import already downloaded ratings
+    # import already downloaded ratings from JSON file
     all_ratings = {}
     if os.path.exists(OUTPUT_FILE_PATH):
         with (open(OUTPUT_FILE_PATH)) as file:
@@ -118,10 +122,10 @@ def capture_fields_from_data(project_data, fields):
     return output
 
 
-def write_json_to_file(data, filepath):
+def write_json_to_file(project_data, filepath):
     """Writes the json-serializable `data` to file with path `filepath`."""
     with open(filepath, 'w') as file:
-        file.write(json.dumps(data))
+        file.write(json.dumps(project_data))
 
 
 if __name__ == "__main__":
